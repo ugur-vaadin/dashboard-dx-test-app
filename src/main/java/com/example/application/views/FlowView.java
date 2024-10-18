@@ -1,19 +1,11 @@
-import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
-import '@vaadin/vaadin-charts';
-import {
-  Chart,
-  ChartSeries,
-  Dashboard,
-  DashboardItem,
-  DashboardSection,
-  DashboardWidget
-} from '@vaadin/react-components-pro';
-import '@vaadin/vaadin-lumo-styles/all-imports';
-import { DataPersistence } from 'Frontend/generated/endpoints.js';
-import React from "react";
-import {TextField} from "@vaadin/react-components";
+package com.example.application.views;
 
-export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/globe-solid.svg' }, title: 'React View' };
+import com.example.application.services.DataPersistence;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.Menu;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /*
  * *******************************************
@@ -23,10 +15,10 @@ export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/gl
  * -1: Add the dashboard to the sample application.
  * -2: Set up two widgets and a section with two widgets.
  * -3: Set title and content to the items. You can use
- *      the provided widgets or use other components to
- *      create your custom widgets.
+ *      the provided charts in "PredefinedCharts" or any other
+ *      custom components to create widgets.
  * -4: Place a span with text next to the title of a widget.
- * -5: Add the predefined ImportantDataWidget to the dashboard.
+ * -5: Add the predefined CustomWidget to the dashboard.
  *      Preserve the value of the text field in the widget
  *      whenever it is updated. You can use the provided
  *      "DataPersistence.updateImportantData" method.
@@ -51,7 +43,7 @@ export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/gl
  * -4: Move a widget out of the section.
  * -5: Preserve the current layout of the widgets within the
  *      dashboard in the DB. You can use the provided
- *      “DataPersistence.storeJsonItems” method.
+ *      “DataPersistence.storeItemsInDB” method.
  *
  * *******************************************
  * TASK 4: Automatically Filling Empty Space
@@ -68,6 +60,10 @@ export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/gl
  * -1: Remove a widget programmatically.
  * -2: Remove a widget using the UI.
  * -3: Remove a section using the UI.
+ * -4: Remove all items programmatically and use the data from
+ *      the method "DataPersistence.getItems" to populate the dashboard.
+ *      You can use "DataPersistence.getPredefinedWidget" to convert
+ *      serialized widget data to a widget.
  *
  * *******************************************
  * TASK 6: Layout and Styling
@@ -79,43 +75,16 @@ export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/gl
  *       400px in height and width.
  * -4: Change the color of the remove button to red.
  */
-function ReactView() {
+@PageTitle("Flow View")
+@Menu(icon = "line-awesome/svg/globe-solid.svg", order = 0)
+@Route("")
+public class FlowView extends HorizontalLayout {
 
-  type TestItem = DashboardItem & {
-    title?: string;
-    type?: string;
-  };
+    private final DataPersistence dataPersistence;
 
-  const LineChartWidget = ({ item }: { item: TestItem }) => {
-    return <DashboardWidget widgetTitle={item.title}>
-      <Chart type="line" title="Monthly Sales">
-        <ChartSeries title="2023 Sales" values={[150, 250, 300, 450, 600]}></ChartSeries>
-        <ChartSeries title="2024 Sales" values={[200, 300, 350, 500, 650]}></ChartSeries>
-      </Chart>
-    </DashboardWidget>
-  }
-
-  const ColumnChartWidget = ({ item }: { item: TestItem }) => {
-    return <DashboardWidget widgetTitle={item.title}>
-      <Chart type="column">
-        <ChartSeries title="Sales" values={[100, 200, 300, 400, 500]}></ChartSeries>
-      </Chart>
-    </DashboardWidget>
-  }
-
-  const ImportantDataWidget = ({ item }: { item: TestItem }) => {
-    return <DashboardWidget widgetTitle={item.title}>
-      <TextField
-        title='Important data'
-      />
-    </DashboardWidget>
-  }
-
-  // TODO write your code here
-  return (
-    <>
-      <section className="flex p-m gap-m items-end">
-      </section>
-    </>
-  );
+    @Autowired
+    public FlowView(DataPersistence dataPersistence) {
+        this.dataPersistence = dataPersistence;
+        // Write your code here
+    }
 }

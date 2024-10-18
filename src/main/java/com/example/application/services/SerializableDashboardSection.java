@@ -6,8 +6,8 @@ import java.util.List;
 public class SerializableDashboardSection extends SerializableDashboardItem {
     private final List<SerializableDashboardWidget> children;
 
-    public SerializableDashboardSection(int id, String title, SerializableDashboardWidget... children) {
-        super(id, title);
+    public SerializableDashboardSection(String title, SerializableDashboardWidget... children) {
+        super(title);
         this.children = Arrays.asList(children);
     }
 

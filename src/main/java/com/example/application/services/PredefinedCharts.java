@@ -29,15 +29,13 @@ import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.charts.model.YAxis;
 import com.vaadin.flow.component.charts.model.style.SolidColor;
 
-import java.util.List;
+public class PredefinedCharts {
 
-public class ChartsService {
-
-    public static List<Chart> getCharts() {
-        return List.of(getAreaChart(), getAreaSplineChart(), getBarChart(), getColumnChart(), getPieChart(), getScatterChart());
+    private PredefinedCharts() {
+        throw new IllegalStateException("Utility class");
     }
 
-    private static Chart getAreaChart() {
+    public static Chart getAreaChart() {
         Chart chart = new Chart(ChartType.AREA);
 
         final Configuration configuration = chart.getConfiguration();
@@ -76,7 +74,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Chart getAreaSplineChart() {
+    public static Chart getAreaSplineChart() {
         Chart chart = new Chart(ChartType.AREASPLINE);
 
         Configuration conf = chart.getConfiguration();
@@ -122,7 +120,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Chart getBarChart() {
+    public static Chart getBarChart() {
         Chart chart = new Chart();
 
         Configuration configuration = chart.getConfiguration();
@@ -165,7 +163,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Chart getColumnChart() {
+    public static Chart getColumnChart() {
         Chart chart = new Chart();
 
         Configuration configuration = chart.getConfiguration();
@@ -200,7 +198,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Chart getScatterChart() {
+    public static Chart getScatterChart() {
         Chart chart = new Chart(ChartType.SCATTER);
 
         Configuration configuration = chart.getConfiguration();
@@ -261,7 +259,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Chart getPieChart() {
+    public static Chart getPieChart() {
         Chart chart = new Chart(ChartType.PIE);
         chart.addThemeVariants(ChartVariant.LUMO_GRADIENT);
         chart.getConfiguration().getChart().setStyledMode(true);
@@ -299,7 +297,7 @@ public class ChartsService {
         return chart;
     }
 
-    private static Number[][] getFemaleData() {
+    public static Number[][] getFemaleData() {
         return new Number[][] { { 161.2, 51.6 }, { 167.5, 59.0 },
                 { 159.5, 49.2 }, { 157.0, 63.0 }, { 155.8, 53.6 },
                 { 170.0, 59.0 }, { 159.1, 47.6 }, { 166.0, 69.8 },
@@ -389,7 +387,7 @@ public class ChartsService {
                 { 160.7, 48.6 }, { 174.0, 66.4 }, { 163.8, 67.3 } };
     }
 
-    private static Number[][] getMaleData() {
+    public static Number[][] getMaleData() {
         return new Number[][] { { 174.0, 65.6 }, { 175.3, 71.8 },
                 { 193.5, 80.7 }, { 186.5, 72.6 }, { 187.2, 78.8 },
                 { 181.5, 74.8 }, { 184.0, 86.4 }, { 184.5, 78.4 },

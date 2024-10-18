@@ -4,7 +4,7 @@ This project can is a Flow&React hybrid project created for the Dashboard DX tes
 The tasks consist of a total of 12 parts, 6 for the Flow component and 6 for the React component.
 
 The instructions are in the view classes where the implementation will also take place:
-- [Flow view](src/main/java/com/example/application/views/flowview/FlowView.java)
+- [Flow view](src/main/java/com/example/application/views/solutions/FlowView.java)
 - [React view](src/main/frontend/views/react-view.tsx)
 
 The session will take approximately 60 minutes.

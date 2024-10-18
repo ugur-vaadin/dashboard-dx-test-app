@@ -1,20 +1,35 @@
 package com.example.application.services;
 
 public class SerializableDashboardWidget extends SerializableDashboardItem {
-    private final Integer rowspan;
-    private final Integer colspan;
+    private WidgetType widgetType;
+    private Integer rowspan;
+    private Integer colspan;
 
-    public SerializableDashboardWidget(int id, String title, Integer rowspan, Integer colspan) {
-        super(id, title);
-        this.rowspan = rowspan;
-        this.colspan = colspan;
+    public SerializableDashboardWidget(String title) {
+        super(title);
+    }
+
+    public WidgetType getWidgetType() {
+        return widgetType;
+    }
+
+    public void setWidgetType(WidgetType widgetType) {
+        this.widgetType = widgetType;
     }
 
     public Integer getRowspan() {
         return rowspan;
     }
 
+    public void setRowspan(Integer rowspan) {
+        this.rowspan = rowspan;
+    }
+
     public Integer getColspan() {
         return colspan;
+    }
+
+    public void setColspan(Integer colspan) {
+        this.colspan = colspan;
     }
 }

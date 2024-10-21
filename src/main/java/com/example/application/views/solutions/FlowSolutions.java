@@ -27,7 +27,7 @@ import java.util.function.Function;
  */
 @PageTitle("Flow Solutions")
 @Menu(icon = "line-awesome/svg/globe-solid.svg", order = 0)
-@Route("solutions")
+@Route("flow-solutions")
 public class FlowSolutions extends HorizontalLayout {
 
     @Autowired

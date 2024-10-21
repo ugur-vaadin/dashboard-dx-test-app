@@ -1,5 +1,4 @@
 import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
-import '@vaadin/vaadin-charts';
 import {
   Chart,
   ChartSeries,
@@ -13,7 +12,7 @@ import { DataPersistence } from 'Frontend/generated/endpoints.js';
 import React from "react";
 import {TextField} from "@vaadin/react-components";
 
-export const config: ViewConfig = { menu: { order: 1, icon: 'line-awesome/svg/globe-solid.svg' }, title: 'React View' };
+export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/globe-solid.svg' }, title: 'React View' };
 
 /*
  * *******************************************
@@ -119,3 +118,5 @@ function ReactView() {
     </>
   );
 }
+
+export default ReactView;

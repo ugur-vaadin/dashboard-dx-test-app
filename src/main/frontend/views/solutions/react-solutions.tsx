@@ -6,12 +6,7 @@ import {
 } from '@vaadin/react-components-pro';
 import { Button, TextField } from '@vaadin/react-components';
 import { DataPersistence } from 'Frontend/generated/endpoints.js';
-import {useRef} from "react";
-
-export const config = {
-  menu: { order: 1, icon: 'line-awesome/svg/globe-solid.svg' },
-  title: 'React Solutions',
-};
+import React, {useRef} from "react";
 
 type TestItem = DashboardItem & {
   title?: string;

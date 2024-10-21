@@ -77,7 +77,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @PageTitle("Flow View")
 @Menu(icon = "line-awesome/svg/globe-solid.svg", order = 0)
-@Route("")
+@Route("flow-view")
 public class FlowView extends HorizontalLayout {
 
     private final DataPersistence dataPersistence;

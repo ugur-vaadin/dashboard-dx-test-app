@@ -1,4 +1,4 @@
-package com.example.application.views.solutions;
+package com.example.application.solutions;
 
 import com.example.application.services.PredefinedCharts;
 import com.example.application.services.CustomWidget;
@@ -14,10 +14,6 @@ import com.vaadin.flow.component.dashboard.DashboardWidget;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.Menu;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.function.Function;
@@ -25,12 +21,8 @@ import java.util.function.Function;
 /**
  * Solutions to the Flow component tasks
  */
-@PageTitle("Flow Solutions")
-@Menu(icon = "line-awesome/svg/globe-solid.svg", order = 0)
-@Route("flow-solutions")
 public class FlowSolutions extends HorizontalLayout {
 
-    @Autowired
     public FlowSolutions(DataPersistence dataPersistence) {
         /*
          * *******************************************

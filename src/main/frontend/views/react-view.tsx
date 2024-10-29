@@ -28,7 +28,7 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  * -5: Add the predefined ImportantDataWidget to the dashboard.
  *      Preserve the value of the text field in the widget
  *      whenever it is updated. You can use the provided
- *      "DataPersistence.updateImportantData" method.
+ *      "DataPersistence.updateImportantDataClient" method.
  *
  * *******************************************
  * TASK 2: Resizing Widgets
@@ -50,7 +50,8 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  * -4: Move a widget out of the section.
  * -5: Preserve the current layout of the widgets within the
  *      dashboard in the DB. You can use the provided
- *      “DataPersistence.storeJsonItems” method.
+ *      “DataPersistence.storeJsonItems” method. You can also use
+ *      “DataPersistence.getJsonItems” method to retrieve the items.
  *
  * *******************************************
  * TASK 4: Automatically Filling Empty Space
@@ -108,6 +109,7 @@ function ReactView() {
     return <DashboardWidget widgetTitle={item.title}>
       <TextField
         title='Important data'
+        value={item.importantData}
       />
     </DashboardWidget>
   }

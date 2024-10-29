@@ -75,17 +75,32 @@ public class FlowSolutions extends HorizontalLayout {
         widget1.setHeaderComponent(headerContent);
 
         /*
-         * Subtask 1.5: Add the predefined CustomWidget to the dashboard.
-         *      Preserve the value of the text field in the widget
-         *      whenever it is updated. You can use the provided
-         *      "DataPersistence.updateImportantData" and
-         *      "DataPersistence.getItemId" methods.
+         * Subtask 1.5: Use the data from the method "DataPersistence.getItems"
+         *      to populate the dashboard.
          */
-        CustomWidget customWidget = new CustomWidget();
-        dashboard.add(customWidget);
-        int itemId = dataPersistence.getItemId(customWidget);
-        customWidget.addImportantDataChangeListener(e ->
-                dataPersistence.updateImportantData(itemId, customWidget.getImportantData()));
+        List<SerializableDashboardItem> dataPersistenceItems = dataPersistence.getItems();
+        dataPersistenceItems.forEach(item -> {
+            if (item instanceof SerializableDashboardSection serializableDashboardSection) {
+                DashboardSection dashboardSection = dashboard.addSection(serializableDashboardSection.getTitle());
+                serializableDashboardSection.getChildren().stream().map(DataPersistence::getPredefinedWidget).forEach(dashboardSection::add);
+            } else {
+                SerializableDashboardWidget serializableDashboardWidget = (SerializableDashboardWidget) item;
+                CustomWidget dashboardWidget = DataPersistence.getPredefinedWidget(serializableDashboardWidget);
+                dashboard.add(dashboardWidget);
+            }
+        });
+
+        /*
+         * Subtask 1.6: Preserve the value of the text field in the
+         *      widget whenever it is updated. You can use the provided
+         *      "DataPersistence.updateImportantDataServer" method.
+         */
+        List<DashboardWidget> widgets = dashboard.getWidgets();
+        CustomWidget widgetWithTextField = (CustomWidget) widgets.get(widgets.size() - 1);
+        widgetWithTextField.addImportantDataChangeListener(e ->
+                dataPersistence.updateImportantDataServer(widgetWithTextField.getWidgetId(),
+                        widgetWithTextField.getImportantData())
+        );
 
         /*
          * *******************************************
@@ -137,20 +152,26 @@ public class FlowSolutions extends HorizontalLayout {
          *      dashboard in the DB. You can use the provided
          *      “DataPersistence.storeItems” method.
          */
-        Function<DashboardWidget, SerializableDashboardWidget> widgetToSerializableWidget = widget -> {
+        Function<CustomWidget, SerializableDashboardWidget> widgetToSerializableWidget = widget -> {
             SerializableDashboardWidget serializableDashboardWidget = new SerializableDashboardWidget(widget.getTitle());
             serializableDashboardWidget.setColspan(widget.getColspan());
             serializableDashboardWidget.setRowspan(widget.getRowspan());
+            serializableDashboardWidget.setWidgetId(widget.getWidgetId());
+            serializableDashboardWidget.setImportantData(widget.getImportantData());
+            serializableDashboardWidget.setWidgetType(widget.getWidgetType());
             return serializableDashboardWidget;
         };
 
         Function<Component, SerializableDashboardItem> itemToSerializableItem = item -> {
             SerializableDashboardItem serializableDashboardItem;
             if (item instanceof DashboardSection dashboardSection) {
-                SerializableDashboardWidget[] serializableWidgets = dashboardSection.getWidgets().stream().map(widgetToSerializableWidget).toArray(SerializableDashboardWidget[]::new);
+                SerializableDashboardWidget[] serializableWidgets = dashboardSection.getWidgets().stream()
+                        .map(CustomWidget.class::cast)
+                        .map(widgetToSerializableWidget)
+                        .toArray(SerializableDashboardWidget[]::new);
                 serializableDashboardItem =  new SerializableDashboardSection(dashboardSection.getTitle(), serializableWidgets);
             } else {
-                serializableDashboardItem = widgetToSerializableWidget.apply((DashboardWidget) item);
+                serializableDashboardItem = widgetToSerializableWidget.apply((CustomWidget) item);
             }
             return serializableDashboardItem;
         };
@@ -188,23 +209,9 @@ public class FlowSolutions extends HorizontalLayout {
         // Removing is done on the UI
 
         /*
-         * Subtask 5.4: Remove all items programmatically and use the data from
-         *      the method "DataPersistence.getItems" to populate the dashboard.
-         *      You can use "DataPersistence.getPredefinedWidget" to convert
-         *      serialized widget data to a widget.
+         * Subtask 5.4: Remove all items programmatically.
          */
         dashboard.removeAll();
-        List<SerializableDashboardItem> dataPersistenceItems = dataPersistence.getItems();
-        dataPersistenceItems.forEach(item -> {
-            if (item instanceof SerializableDashboardSection serializableDashboardSection) {
-                DashboardSection dashboardSection = dashboard.addSection(serializableDashboardSection.getTitle());
-                serializableDashboardSection.getChildren().stream().map(DataPersistence::getPredefinedWidget).forEach(dashboardSection::add);
-            } else {
-                SerializableDashboardWidget serializableDashboardWidget = (SerializableDashboardWidget) item;
-                DashboardWidget dashboardWidget = DataPersistence.getPredefinedWidget(serializableDashboardWidget);
-                dashboard.add(dashboardWidget);
-            }
-        });
 
         /*
          * *******************************************

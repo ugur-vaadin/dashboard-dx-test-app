@@ -1,7 +1,7 @@
 package com.example.application.views;
 
 import com.example.application.services.DataPersistence;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -18,11 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  *      the provided charts in "PredefinedCharts" or any other
  *      custom components to create widgets.
  * -4: Place a span with text next to the title of a widget.
- * -5: Add the predefined CustomWidget to the dashboard.
- *      Preserve the value of the text field in the widget
+ * -5: Use the data from the method "DataPersistence.getItems"
+ *      to populate the dashboard.
+ * -6: Preserve the value of the text field in the widget
  *      whenever it is updated. You can use the provided
- *      "DataPersistence.updateImportantData" and
- *      "DataPersistence.getItemId" methods.
+ *      "DataPersistence.updateImportantDataServer" method.
  *
  * *******************************************
  * TASK 2: Resizing Widgets
@@ -61,10 +61,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * -1: Remove a widget programmatically.
  * -2: Remove a widget using the UI.
  * -3: Remove a section using the UI.
- * -4: Remove all items programmatically and use the data from
- *      the method "DataPersistence.getItems" to populate the dashboard.
- *      You can use "DataPersistence.getPredefinedWidget" to convert
- *      serialized widget data to a widget.
+ * -4: Remove all items programmatically.
  *
  * *******************************************
  * TASK 6: Layout and Styling
@@ -79,7 +76,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Flow View")
 @Menu(icon = "line-awesome/svg/globe-solid.svg", order = 0)
 @Route("flow-view")
-public class FlowView extends HorizontalLayout {
+public class FlowView extends VerticalLayout {
 
     private final DataPersistence dataPersistence;
 

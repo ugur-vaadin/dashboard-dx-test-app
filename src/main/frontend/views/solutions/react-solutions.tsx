@@ -9,7 +9,7 @@ import { DataPersistence } from 'Frontend/generated/endpoints.js';
 import React, {useEffect, useState} from "react";
 
 type TestItem = DashboardItem & {
-  id?: number;
+  id?: string;
   title?: string;
   importantData?: string;
   type?: string;
@@ -81,26 +81,26 @@ const task_1_2_dashboard = () => {
 const task_1_3_items: DashboardProps<TestItem>['items'] =
   [
     {
-      id: 0,
+      id: 'item-0',
       title: 'Widget 1',
       type: 'column',
     },
     {
-      id: 1,
+      id: 'item-1',
       title: 'Widget 2',
       type: 'line',
     },
     {
-      id: 2,
+      id: 'item-2',
       title: 'Section',
       items: [
         {
-          id: 3,
+          id: 'item-3',
           title: 'Widget in section 1',
           type: 'column',
         },
         {
-          id: 4,
+          id: 'item-4',
           title: 'Widget in section 2',
           type: 'line',
         },
@@ -164,38 +164,38 @@ const task_1_4_dashboard = () => {
  * Subtask 1.5: Add the predefined ImportantDataWidget to the dashboard.
  *      Preserve the value of the text field in the widget
  *      whenever it is updated. You can use the provided
- *      "DataPersistence.updateImportantData" method.
+ *      "DataPersistence.updateImportantDataClient" method.
  */
 const task_1_5_items: DashboardProps<TestItem>['items'] =
   [
     {
-      id: 0,
+      id: 'item-0',
       title: 'Widget 1',
       type: 'column',
     },
     {
-      id: 1,
+      id: 'item-1',
       title: 'Widget 2',
       type: 'line',
     },
     {
-      id: 2,
+      id: 'item-2',
       title: 'Section',
       items: [
         {
-          id: 3,
+          id: 'item-3',
           title: 'Widget in section 1',
           type: 'column',
         },
         {
-          id: 4,
+          id: 'item-4',
           title: 'Widget in section 2',
           type: 'line',
         },
       ],
     },
     {
-      id: 5,
+      id: 'item-5',
       title: 'Widget with text field',
       type: 'text',
     },
@@ -206,7 +206,7 @@ const Task_1_5_importantDataWidget = ({ item }: { item: TestItem }) => {
     <TextField
       title='Important data'
       value={item.importantData}
-      onChange={(e) => DataPersistence.updateImportantData(item.id as number, e.target.value)}
+      onChange={(e) => DataPersistence.updateImportantDataClient(item.id as string, e.target.value)}
     />
   </DashboardWidget>
 }
@@ -240,8 +240,8 @@ const task_1_5_dashboard = () => {
 
 // Subtask 2.1: Define varying initial widget sizes.
 const task_2_1_items: DashboardProps<TestItem>['items'] = [
-  { id: 0, title: 'Widget 1', type: 'column', rowspan: 2 },
-  { id: 1, title: 'Widget 2', type: 'line', colspan: 2 },
+  { id: 'item-0', title: 'Widget 1', type: 'column', rowspan: 2 },
+  { id: 'item-1', title: 'Widget 2', type: 'line', colspan: 2 },
 ];
 
 
@@ -296,26 +296,26 @@ const task_2_4_dashboard = () => {
 const task_3_items: DashboardProps<TestItem>['items'] =
   [
     {
-      id: 0,
+      id: 'item-0',
       title: 'Widget 1',
       type: 'column',
     },
     {
-      id: 1,
+      id: 'item-1',
       title: 'Widget 2',
       type: 'line',
     },
     {
-      id: 2,
+      id: 'item-2',
       title: 'Section',
       items: [
         {
-          id: 3,
+          id: 'item-3',
           title: 'Widget in section 1',
           type: 'column',
         },
         {
-          id: 4,
+          id: 'item-4',
           title: 'Widget in section 2',
           type: 'line',
         },
@@ -346,21 +346,26 @@ const task_3_dashboard = () => {
 const task_3_4_items: DashboardProps<TestItem>['items'] =
   [
     {
+      id: 'item-0',
       title: 'Widget 1',
       type: 'column',
     },
     {
+      id: 'item-3',
       title: 'Widget in section 1',
       type: 'column',
     },
     {
+      id: 'item-1',
       title: 'Widget 2',
       type: 'line',
     },
     {
+      id: 'item-2',
       title: 'Section',
       items: [
         {
+          id: 'item-4',
           title: 'Widget in section 2',
           type: 'line',
         },
@@ -384,6 +389,10 @@ const task_3_4_dashboard = () => {
  *      “DataPersistence.getJsonItems” method to retrieve the items.
  */
 const [items, setItems] = useState<(TestItem | DashboardSectionItem<TestItem>)[]>([]);
+
+useEffect(() => {
+  DataPersistence.getJsonItems().then(r => setItems(JSON.parse(r)));
+}, []);
 
 const handleSave = async () => {
   await DataPersistence.storeJsonItems(JSON.stringify(items));
@@ -416,31 +425,10 @@ const task_3_5_dashboard = () => {
  *      automatically fill in the empty space with suitable widgets.
  */
 // Moving is done on the UI
-const task_4_1_items: DashboardProps<TestItem>['items'] =
-  [
-    {
-      title: 'Widget 1',
-      type: 'column',
-    },
-    {
-      title: 'Section',
-      items: [
-        {
-          title: 'Widget in section 2',
-          type: 'line',
-        },
-      ],
-    },
-    {
-      title: 'Widget 2',
-      type: 'line',
-    },
-  ];
-
 const task_4_1_dashboard = () => {
   return (
     <Dashboard<TestItem>
-      items={task_4_1_items}
+      items={items}
       editable
       dense-layout
     >{task_1_5_renderer}</Dashboard>
@@ -454,35 +442,9 @@ const task_4_1_dashboard = () => {
  */
 
 // Subtask 5.1: Remove a widget programmatically.
-const task_5_1_items: DashboardProps<TestItem>['items'] =
-  [
-    {
-      title: 'Widget 2',
-      type: 'line',
-    },
-    {
-      title: 'Section',
-      items: [
-        {
-          title: 'Widget in section 1',
-          type: 'column',
-        },
-        {
-          title: 'Widget in section 2',
-          type: 'line',
-        },
-      ],
-    },
-  ];
-
-const task_5_1_dashboard = () => {
-  return (
-    <Dashboard<TestItem>
-      items={task_5_1_items}
-      editable
-    >{task_1_5_renderer}</Dashboard>
-  );
-};
+const indexToRemove = 0;
+const newItems = [...items].splice(indexToRemove, 1);
+setItems(newItems);
 
 // Subtask 5.2: Remove a widget using the UI.
 // Removing is done on the UI
@@ -501,7 +463,7 @@ const task_6_1_dashboard = () => {
   return (
     <Dashboard<TestItem>
       style={{ '--vaadin-dashboard-spacing': '0px' }}
-      items={task_5_1_items}
+      items={items}
       editable
     >{task_1_5_renderer}</Dashboard>
   );
@@ -512,7 +474,7 @@ const task_6_2_dashboard = () => {
   return (
     <Dashboard<TestItem>
       style={{ '--vaadin-dashboard-col-max-count': '2' }}
-      items={task_5_1_items}
+      items={items}
       editable
     >{task_1_5_renderer}</Dashboard>
   );
@@ -529,7 +491,7 @@ const task_6_3_dashboard = () => {
         '--vaadin-dashboard-col-min-width': '400px',
         '--vaadin-dashboard-col-min-height': '400px'
       }}
-      items={task_5_1_items}
+      items={items}
       editable
     >{task_1_5_renderer}</Dashboard>
   );
@@ -548,7 +510,7 @@ const task_6_4_dashboard = () => {
     <div>
       <style>{task_6_4_dashboardStyle}</style>
       <Dashboard
-        items={task_5_1_items}
+        items={items}
         editable
       >{task_1_5_renderer}</Dashboard>
     </div>

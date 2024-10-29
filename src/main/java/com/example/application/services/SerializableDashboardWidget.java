@@ -1,6 +1,7 @@
 package com.example.application.services;
 
 public class SerializableDashboardWidget extends SerializableDashboardItem {
+    private String widgetId;
     private WidgetType widgetType;
     private Integer rowspan;
     private Integer colspan;
@@ -40,5 +41,13 @@ public class SerializableDashboardWidget extends SerializableDashboardItem {
 
     public void setImportantData(String importantData) {
         this.importantData = importantData;
+    }
+
+    public String getWidgetId() {
+        return widgetId;
+    }
+
+    public void setWidgetId(String widgetId) {
+        this.widgetId = widgetId;
     }
 }

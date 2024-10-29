@@ -8,7 +8,11 @@ import com.vaadin.flow.shared.Registration;
 
 public class CustomWidget extends DashboardWidget {
 
+    private WidgetType widgetType;
+
     private final TextField textField;
+
+    private String widgetId;
 
     public CustomWidget() {
         setTitle("Custom Widget");
@@ -22,10 +26,26 @@ public class CustomWidget extends DashboardWidget {
     }
 
     public void setImportantData(String data) {
-        textField.setValue(data);
+        textField.setValue(data == null ? "" : data);
     }
 
     public Registration addImportantDataChangeListener(HasValue.ValueChangeListener<? super AbstractField.ComponentValueChangeEvent<TextField, String>> listener) {
         return textField.addValueChangeListener(listener);
+    }
+
+    public String getWidgetId() {
+        return widgetId;
+    }
+
+    public void setWidgetId(String widgetId) {
+        this.widgetId = widgetId;
+    }
+
+    public WidgetType getWidgetType() {
+        return widgetType;
+    }
+
+    public void setWidgetType(WidgetType widgetType) {
+        this.widgetType = widgetType;
     }
 }

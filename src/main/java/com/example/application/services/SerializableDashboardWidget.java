@@ -4,6 +4,7 @@ public class SerializableDashboardWidget extends SerializableDashboardItem {
     private WidgetType widgetType;
     private Integer rowspan;
     private Integer colspan;
+    private String importantData;
 
     public SerializableDashboardWidget(String title) {
         super(title);
@@ -31,5 +32,13 @@ public class SerializableDashboardWidget extends SerializableDashboardItem {
 
     public void setColspan(Integer colspan) {
         this.colspan = colspan;
+    }
+
+    public String getImportantData() {
+        return importantData;
+    }
+
+    public void setImportantData(String importantData) {
+        this.importantData = importantData;
     }
 }

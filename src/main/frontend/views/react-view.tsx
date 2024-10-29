@@ -81,7 +81,9 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
 function ReactView() {
 
   type TestItem = DashboardItem & {
+    id?: number;
     title?: string;
+    importantData?: string;
     type?: string;
   };
 

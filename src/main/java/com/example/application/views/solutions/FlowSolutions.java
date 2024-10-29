@@ -78,12 +78,14 @@ public class FlowSolutions extends HorizontalLayout {
          * Subtask 1.5: Add the predefined CustomWidget to the dashboard.
          *      Preserve the value of the text field in the widget
          *      whenever it is updated. You can use the provided
-         *      "DataPersistence.updateImportantData" method.
+         *      "DataPersistence.updateImportantData" and
+         *      "DataPersistence.getItemId" methods.
          */
         CustomWidget customWidget = new CustomWidget();
         dashboard.add(customWidget);
-        TextField importantDataField = (TextField) customWidget.getContent();
-        importantDataField.addValueChangeListener(e -> dataPersistence.updateImportantData(e.getValue()));
+        int itemId = dataPersistence.getItemId(customWidget);
+        customWidget.addImportantDataChangeListener(e ->
+                dataPersistence.updateImportantData(itemId, customWidget.getImportantData()));
 
         /*
          * *******************************************

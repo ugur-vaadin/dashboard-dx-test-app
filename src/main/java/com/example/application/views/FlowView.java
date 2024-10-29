@@ -21,7 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * -5: Add the predefined CustomWidget to the dashboard.
  *      Preserve the value of the text field in the widget
  *      whenever it is updated. You can use the provided
- *      "DataPersistence.updateImportantData" method.
+ *      "DataPersistence.updateImportantData" and
+ *      "DataPersistence.getItemId" methods.
  *
  * *******************************************
  * TASK 2: Resizing Widgets

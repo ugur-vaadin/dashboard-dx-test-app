@@ -2,14 +2,16 @@ import {
   Dashboard,
   DashboardWidget,
   Chart,
-  ChartSeries, DashboardItem, DashboardProps, DashboardElement, DashboardWidgetElement,
+  ChartSeries, DashboardItem, DashboardProps, DashboardSectionItem,
 } from '@vaadin/react-components-pro';
 import { Button, TextField } from '@vaadin/react-components';
 import { DataPersistence } from 'Frontend/generated/endpoints.js';
-import React, {useRef} from "react";
+import React, {useEffect, useState} from "react";
 
 type TestItem = DashboardItem & {
+  id?: number;
   title?: string;
+  importantData?: string;
   type?: string;
 };
 
@@ -34,11 +36,10 @@ const ImportantDataWidget = ({ item }: { item: TestItem }) => {
   return <DashboardWidget widgetTitle={item.title}>
     <TextField
       title='Important data'
+      value={item.importantData}
     />
   </DashboardWidget>
 }
-
-const dashboardRef = useRef<DashboardElement<TestItem>>(null);
 
 /*
  * *******************************************
@@ -49,7 +50,7 @@ const dashboardRef = useRef<DashboardElement<TestItem>>(null);
 // Subtask 1.1: Add the dashboard to the sample application.
 const task_1_1_dashboard = () => {
   return (
-    <Dashboard ref={dashboardRef}/>
+    <Dashboard />
   )
 };
 
@@ -68,7 +69,7 @@ const task_1_2_items: DashboardProps<DashboardItem>['items'] =
 
 const task_1_2_dashboard = () => {
   return (
-    <Dashboard ref={dashboardRef} items={task_1_2_items}/>
+    <Dashboard items={task_1_2_items}/>
   )
 };
 
@@ -80,21 +81,26 @@ const task_1_2_dashboard = () => {
 const task_1_3_items: DashboardProps<TestItem>['items'] =
   [
     {
+      id: 0,
       title: 'Widget 1',
       type: 'column',
     },
     {
+      id: 1,
       title: 'Widget 2',
       type: 'line',
     },
     {
+      id: 2,
       title: 'Section',
       items: [
         {
+          id: 3,
           title: 'Widget in section 1',
           type: 'column',
         },
         {
+          id: 4,
           title: 'Widget in section 2',
           type: 'line',
         },
@@ -117,11 +123,9 @@ const task_1_3_renderer = ({ item }: { item: TestItem }) => {
 
 const task_1_3_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_1_3_items}
-      renderer={task_1_3_renderer}
-    ></Dashboard>
+    >{task_1_3_renderer}</Dashboard>
   )
 };
 
@@ -150,11 +154,9 @@ const task_1_4_renderer = ({ item }: { item: TestItem }) => {
 
 const task_1_4_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_1_3_items}
-      renderer={task_1_4_renderer}
-    ></Dashboard>
+    >{task_1_4_renderer}</Dashboard>
   );
 };
 
@@ -167,27 +169,33 @@ const task_1_4_dashboard = () => {
 const task_1_5_items: DashboardProps<TestItem>['items'] =
   [
     {
+      id: 0,
       title: 'Widget 1',
       type: 'column',
     },
     {
+      id: 1,
       title: 'Widget 2',
       type: 'line',
     },
     {
+      id: 2,
       title: 'Section',
       items: [
         {
+          id: 3,
           title: 'Widget in section 1',
           type: 'column',
         },
         {
+          id: 4,
           title: 'Widget in section 2',
           type: 'line',
         },
       ],
     },
     {
+      id: 5,
       title: 'Widget with text field',
       type: 'text',
     },
@@ -197,7 +205,8 @@ const Task_1_5_importantDataWidget = ({ item }: { item: TestItem }) => {
   return <DashboardWidget widgetTitle={item.title}>
     <TextField
       title='Important data'
-      onChange={(e) => DataPersistence.updateImportantData(e.target.value)}
+      value={item.importantData}
+      onChange={(e) => DataPersistence.updateImportantData(item.id as number, e.target.value)}
     />
   </DashboardWidget>
 }
@@ -217,11 +226,9 @@ const task_1_5_renderer = ({ item }: { item: TestItem }) => {
 
 const task_1_5_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_1_5_items}
-      renderer={task_1_5_renderer}
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -233,18 +240,16 @@ const task_1_5_dashboard = () => {
 
 // Subtask 2.1: Define varying initial widget sizes.
 const task_2_1_items: DashboardProps<TestItem>['items'] = [
-  { title: 'Widget 1', type: 'column', rowspan: 2 },
-  { title: 'Widget 2', type: 'line', colspan: 2 },
+  { id: 0, title: 'Widget 1', type: 'column', rowspan: 2 },
+  { id: 1, title: 'Widget 2', type: 'line', colspan: 2 },
 ];
 
 
 const task_2_1_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_2_1_items}
-      renderer={task_1_5_renderer}
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -252,12 +257,10 @@ const task_2_1_dashboard = () => {
 // Subtask 2.2: Resize a widget using a mouse.
 const task_2_2_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_2_1_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -276,13 +279,11 @@ const task_2_4_handleWidgetResize = (event: any) => {
 
 const task_2_4_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_2_1_items}
-      renderer={task_1_5_renderer}
       editable
       onDashboardItemResized={task_2_4_handleWidgetResize}
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -295,21 +296,26 @@ const task_2_4_dashboard = () => {
 const task_3_items: DashboardProps<TestItem>['items'] =
   [
     {
+      id: 0,
       title: 'Widget 1',
       type: 'column',
     },
     {
+      id: 1,
       title: 'Widget 2',
       type: 'line',
     },
     {
+      id: 2,
       title: 'Section',
       items: [
         {
+          id: 3,
           title: 'Widget in section 1',
           type: 'column',
         },
         {
+          id: 4,
           title: 'Widget in section 2',
           type: 'line',
         },
@@ -319,12 +325,10 @@ const task_3_items: DashboardProps<TestItem>['items'] =
 
 const task_3_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_3_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -366,23 +370,23 @@ const task_3_4_items: DashboardProps<TestItem>['items'] =
 
 const task_3_4_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_3_4_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
 /*
  * Subtask 3.5: Preserve the current layout of the widgets within
  *      the dashboard in the DB. You can use the provided
- *      “DataPersistence.storeJsonItems” method.
+ *      “DataPersistence.storeJsonItems” method. You can also use
+ *      “DataPersistence.getJsonItems” method to retrieve the items.
  */
-const handleSave = () => {
-  const items = dashboardRef.current?.items || [];
-  DataPersistence.storeJsonItems(items);
+const [items, setItems] = useState<(TestItem | DashboardSectionItem<TestItem>)[]>([]);
+
+const handleSave = async () => {
+  await DataPersistence.storeJsonItems(JSON.stringify(items));
 };
 
 const task_3_5_dashboard = () => {
@@ -390,11 +394,12 @@ const task_3_5_dashboard = () => {
     <div>
       <Button onClick={handleSave}>Save Layout to DB</Button>
       <Dashboard
-        ref={dashboardRef}
-        items={task_3_4_items}
-        renderer={task_1_5_renderer}
+        items={items}
         editable
-      ></Dashboard>
+        onDashboardItemMoved={(e: any) => setItems(e.detail.items)}
+        onDashboardItemRemoved={(e: any) => setItems(e.detail.items)}
+        onDashboardItemResized={(e: any) => setItems(e.detail.items)}
+      >{task_1_5_renderer}</Dashboard>
     </div>
   );
 };
@@ -434,13 +439,11 @@ const task_4_1_items: DashboardProps<TestItem>['items'] =
 
 const task_4_1_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_4_1_items}
-      renderer={task_1_5_renderer}
       editable
       dense-layout
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -474,12 +477,10 @@ const task_5_1_items: DashboardProps<TestItem>['items'] =
 
 const task_5_1_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       items={task_5_1_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -498,26 +499,22 @@ const task_5_1_dashboard = () => {
 // Subtask 6.1: Remove the gap between the widgets.
 const task_6_1_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       style={{ '--vaadin-dashboard-spacing': '0px' }}
       items={task_5_1_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
 // Subtask 6.2: Limit the maximum number of widgets in the same row to 2.
 const task_6_2_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       style={{ '--vaadin-dashboard-col-max-count': '2' }}
       items={task_5_1_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -527,16 +524,14 @@ const task_6_2_dashboard = () => {
  */
 const task_6_3_dashboard = () => {
   return (
-    <Dashboard
-      ref={dashboardRef}
+    <Dashboard<TestItem>
       style={{
         '--vaadin-dashboard-col-min-width': '400px',
         '--vaadin-dashboard-col-min-height': '400px'
       }}
       items={task_5_1_items}
-      renderer={task_1_5_renderer}
       editable
-    ></Dashboard>
+    >{task_1_5_renderer}</Dashboard>
   );
 };
 
@@ -553,11 +548,9 @@ const task_6_4_dashboard = () => {
     <div>
       <style>{task_6_4_dashboardStyle}</style>
       <Dashboard
-        ref={dashboardRef}
         items={task_5_1_items}
-        renderer={task_1_5_renderer}
         editable
-      ></Dashboard>
+      >{task_1_5_renderer}</Dashboard>
     </div>
   );
 };

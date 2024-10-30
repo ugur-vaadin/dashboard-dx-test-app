@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @BrowserCallable
 @AnonymousAllowed
@@ -43,27 +42,6 @@ public class DataPersistence implements Serializable {
         return items;
     }
 
-    public void updateImportantDataClient(String id, String importantData) {
-        Objects.requireNonNull(id);
-        jsonItems = updateJsonArray(id, importantData).toJson();
-    }
-
-    public void updateImportantDataServer(String id, String importantData) {
-        Objects.requireNonNull(id);
-        items.stream().map(item -> {
-            if (item instanceof SerializableDashboardSection serializableDashboardSection) {
-                return serializableDashboardSection.getChildren().stream().filter(serializableDashboardWidget ->
-                        id.equals(serializableDashboardWidget.getWidgetId())).findAny().orElse(null);
-            } else {
-                SerializableDashboardWidget serializableDashboardWidget = (SerializableDashboardWidget) item;
-                if (id.equals(serializableDashboardWidget.getWidgetId())) {
-                    return serializableDashboardWidget;
-                }
-            }
-            return null;
-        }).filter(Objects::nonNull).findAny().ifPresent(serializableDashboardWidget -> serializableDashboardWidget.setImportantData(importantData));
-    }
-
     public static Component getPredefinedWidgetContent(WidgetType widgetType) {
         return switch (widgetType) {
             case AREA_CHART -> PredefinedCharts.getAreaChart();
@@ -75,49 +53,63 @@ public class DataPersistence implements Serializable {
         };
     }
 
-    public static CustomWidget getPredefinedWidget(SerializableDashboardWidget serializableDashboardWidget) {
+    public static CustomWidget getPredefinedWidget(SerializableDashboardItem serializableDashboardItem) {
+        if (serializableDashboardItem.isSection()) {
+            return null;
+        }
         CustomWidget dashboardWidget = new CustomWidget();
-        dashboardWidget.setWidgetId(serializableDashboardWidget.getWidgetId());
-        dashboardWidget.setTitle(serializableDashboardWidget.getTitle());
-        if (serializableDashboardWidget.getWidgetType() != null) {
-            dashboardWidget.setWidgetType(serializableDashboardWidget.getWidgetType());
-            dashboardWidget.setContent(getPredefinedWidgetContent(serializableDashboardWidget.getWidgetType()));
+        dashboardWidget.setWidgetId(serializableDashboardItem.getWidgetId());
+        dashboardWidget.setTitle(serializableDashboardItem.getTitle());
+        if (serializableDashboardItem.getWidgetType() != null) {
+            dashboardWidget.setWidgetType(serializableDashboardItem.getWidgetType());
+            dashboardWidget.setContent(getPredefinedWidgetContent(serializableDashboardItem.getWidgetType()));
         }
-        if (serializableDashboardWidget.getColspan() != null) {
-            dashboardWidget.setColspan(serializableDashboardWidget.getColspan());
+        if (serializableDashboardItem.getColspan() != null) {
+            dashboardWidget.setColspan(serializableDashboardItem.getColspan());
         }
-        if (serializableDashboardWidget.getRowspan() != null) {
-            dashboardWidget.setRowspan(serializableDashboardWidget.getRowspan());
+        if (serializableDashboardItem.getRowspan() != null) {
+            dashboardWidget.setRowspan(serializableDashboardItem.getRowspan());
         }
-        dashboardWidget.setImportantData(serializableDashboardWidget.getImportantData());
+        dashboardWidget.setImportantData(serializableDashboardItem.getImportantData());
         return dashboardWidget;
     }
 
     private void initItems() {
         items = new ArrayList<>();
 
-        SerializableDashboardWidget widget1 = new SerializableDashboardWidget("Widget 1");
+        SerializableDashboardItem widget1 = new SerializableDashboardItem();
+        widget1.setTitle("Widget 1");
         widget1.setWidgetId("server-widget-1");
         widget1.setWidgetType(WidgetType.AREA_CHART);
         widget1.setColspan(2);
         items.add(widget1);
 
-        SerializableDashboardWidget widget2 = new SerializableDashboardWidget("Widget 2");
+        SerializableDashboardItem widget2 = new SerializableDashboardItem();
+        widget2.setTitle("Widget 2");
         widget2.setWidgetId("server-widget-2");
         widget2.setWidgetType(WidgetType.BAR_CHART);
         widget2.setRowspan(2);
         items.add(widget2);
 
-        SerializableDashboardWidget widgetInSection1 = new SerializableDashboardWidget("Widget in section 1");
+        SerializableDashboardItem widgetInSection1 = new SerializableDashboardItem();
+        widgetInSection1.setTitle("Widget in section 1");
         widgetInSection1.setWidgetId("server-widget-3");
         widgetInSection1.setWidgetType(WidgetType.AREA_SPLINE_CHART);
-        SerializableDashboardWidget widgetInSection2 = new SerializableDashboardWidget("Widget in section 2");
+        SerializableDashboardItem widgetInSection2 = new SerializableDashboardItem();
+        widgetInSection2.setTitle("Widget in section 2");
         widgetInSection2.setWidgetId("server-widget-4");
         widgetInSection2.setWidgetType(WidgetType.SCATTER_CHART);
-        SerializableDashboardSection section = new SerializableDashboardSection("Section", widgetInSection1, widgetInSection2);
+
+        SerializableDashboardItem section = new SerializableDashboardItem();
+        section.setTitle("Section");
+        List<SerializableDashboardItem> sectionItems = new ArrayList<>();
+        sectionItems.add(widgetInSection1);
+        sectionItems.add(widgetInSection2);
+        section.setItems(sectionItems);
         items.add(section);
 
-        SerializableDashboardWidget widgetWithTextField = new SerializableDashboardWidget("Widget with text field");
+        SerializableDashboardItem widgetWithTextField = new SerializableDashboardItem();
+        widgetWithTextField.setTitle("Widget with text field");
         widgetWithTextField.setWidgetId("server-widget-with-text-field");
         widgetWithTextField.setImportantData("Initial important data");
         items.add(widgetWithTextField);
@@ -162,26 +154,5 @@ public class DataPersistence implements Serializable {
         sectionItems.set(1, itemInSection2);
 
         jsonItems = jsonItemsArray.toJson();
-    }
-
-    private JsonArray updateJsonArray(String id, String importantData) {
-        JsonArray itemsArray = (JsonArray) Json.parse(jsonItems);
-        for (int i = 0; i < itemsArray.length(); i++) {
-            JsonObject item = itemsArray.getObject(i);
-            if (item.hasKey("items")) {
-                JsonArray itemsInSection = item.getArray("items");
-                for (int j = 0; j < itemsInSection.length(); j++) {
-                    JsonObject itemInSection = itemsInSection.getObject(j);
-                    if (id.equals(itemInSection.get("id"))) {
-                        item.put("importantData", importantData);
-                        return itemsArray;
-                    }
-                }
-            } else if (id.equals(item.get("id"))) {
-                item.put("importantData", importantData);
-                return itemsArray;
-            }
-        }
-        return itemsArray;
     }
 }

@@ -22,7 +22,6 @@ import com.vaadin.flow.component.charts.model.PlotOptionsScatter;
 import com.vaadin.flow.component.charts.model.SeriesTooltip;
 import com.vaadin.flow.component.charts.model.Stacking;
 import com.vaadin.flow.component.charts.model.TickmarkPlacement;
-import com.vaadin.flow.component.charts.model.Title;
 import com.vaadin.flow.component.charts.model.Tooltip;
 import com.vaadin.flow.component.charts.model.VerticalAlign;
 import com.vaadin.flow.component.charts.model.XAxis;
@@ -39,10 +38,6 @@ public class PredefinedCharts {
         Chart chart = new Chart(ChartType.AREA);
 
         final Configuration configuration = chart.getConfiguration();
-
-        configuration.setTitle(
-                "Historic and Estimated Worldwide Population Growth by Region");
-        configuration.setSubTitle("Source: Wikipedia.org");
 
         XAxis xAxis = configuration.getxAxis();
         xAxis.setCategories("1750", "1800", "1850", "1900", "1950", "1999",
@@ -78,8 +73,6 @@ public class PredefinedCharts {
         Chart chart = new Chart(ChartType.AREASPLINE);
 
         Configuration conf = chart.getConfiguration();
-
-        conf.setTitle(new Title("Average fruit consumption during one week"));
 
         Legend legend = new Legend();
         legend.setLayout(LayoutDirection.VERTICAL);
@@ -124,9 +117,7 @@ public class PredefinedCharts {
         Chart chart = new Chart();
 
         Configuration configuration = chart.getConfiguration();
-        configuration.setTitle("Historic World Population by Region");
-        configuration.setSubTitle(
-                "Source: <a href=\"https://en.wikipedia.org/wiki/World_population\">Wikipedia.org</a>");
+
         chart.getConfiguration().getChart().setType(ChartType.BAR);
 
         configuration
@@ -167,8 +158,7 @@ public class PredefinedCharts {
         Chart chart = new Chart();
 
         Configuration configuration = chart.getConfiguration();
-        configuration.setTitle("Monthly Average Rainfall");
-        configuration.setSubTitle("Source: WorldClimate.com");
+
         chart.getConfiguration().getChart().setType(ChartType.COLUMN);
 
         configuration.addSeries(new ListSeries("Tokyo", 49.9, 71.5, 106.4,
@@ -202,10 +192,6 @@ public class PredefinedCharts {
         Chart chart = new Chart(ChartType.SCATTER);
 
         Configuration configuration = chart.getConfiguration();
-
-        configuration
-                .setTitle("Height Versus Weight of 507 Individuals by Gender");
-        configuration.setSubTitle("Source: Heinz  2003");
 
         XAxis xAxis = configuration.getxAxis();
         xAxis.setTitle("Height (cm)");
@@ -265,8 +251,6 @@ public class PredefinedCharts {
         chart.getConfiguration().getChart().setStyledMode(true);
 
         Configuration conf = chart.getConfiguration();
-
-        conf.setTitle("Browser market shares in January, 2018");
 
         Tooltip tooltip = new Tooltip();
         tooltip.setValueDecimals(1);

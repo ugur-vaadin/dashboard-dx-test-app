@@ -54,15 +54,16 @@ public class DataPersistence implements Serializable {
     }
 
     public static CustomWidget getPredefinedWidget(SerializableDashboardItem serializableDashboardItem) {
-        if (serializableDashboardItem.isSection()) {
+        if (serializableDashboardItem.getItems() != null) {
             return null;
         }
         CustomWidget dashboardWidget = new CustomWidget();
         dashboardWidget.setWidgetId(serializableDashboardItem.getWidgetId());
         dashboardWidget.setTitle(serializableDashboardItem.getTitle());
         if (serializableDashboardItem.getWidgetType() != null) {
-            dashboardWidget.setWidgetType(serializableDashboardItem.getWidgetType());
-            dashboardWidget.setContent(getPredefinedWidgetContent(serializableDashboardItem.getWidgetType()));
+            WidgetType widgetType = WidgetType.valueOf(serializableDashboardItem.getWidgetType());
+            dashboardWidget.setWidgetType(widgetType);
+            dashboardWidget.setContent(getPredefinedWidgetContent(widgetType));
         }
         if (serializableDashboardItem.getColspan() != null) {
             dashboardWidget.setColspan(serializableDashboardItem.getColspan());
@@ -80,25 +81,25 @@ public class DataPersistence implements Serializable {
         SerializableDashboardItem widget1 = new SerializableDashboardItem();
         widget1.setTitle("Widget 1");
         widget1.setWidgetId("server-widget-1");
-        widget1.setWidgetType(WidgetType.AREA_CHART);
+        widget1.setWidgetType(WidgetType.AREA_CHART.name());
         widget1.setColspan(2);
         items.add(widget1);
 
         SerializableDashboardItem widget2 = new SerializableDashboardItem();
         widget2.setTitle("Widget 2");
         widget2.setWidgetId("server-widget-2");
-        widget2.setWidgetType(WidgetType.BAR_CHART);
+        widget2.setWidgetType(WidgetType.BAR_CHART.name());
         widget2.setRowspan(2);
         items.add(widget2);
 
         SerializableDashboardItem widgetInSection1 = new SerializableDashboardItem();
         widgetInSection1.setTitle("Widget in section 1");
         widgetInSection1.setWidgetId("server-widget-3");
-        widgetInSection1.setWidgetType(WidgetType.AREA_SPLINE_CHART);
+        widgetInSection1.setWidgetType(WidgetType.AREA_SPLINE_CHART.name());
         SerializableDashboardItem widgetInSection2 = new SerializableDashboardItem();
         widgetInSection2.setTitle("Widget in section 2");
         widgetInSection2.setWidgetId("server-widget-4");
-        widgetInSection2.setWidgetType(WidgetType.SCATTER_CHART);
+        widgetInSection2.setWidgetType(WidgetType.SCATTER_CHART.name());
 
         SerializableDashboardItem section = new SerializableDashboardItem();
         section.setTitle("Section");

@@ -74,7 +74,7 @@ public class FlowSolutions extends HorizontalLayout {
          */
         List<SerializableDashboardItem> dataPersistenceItems = dataPersistence.getItems();
         dataPersistenceItems.forEach(item -> {
-            if (item.isSection()) {
+            if (item.getItems() == null) {
                 DashboardSection dashboardSection = dashboard.addSection(item.getTitle());
                 item.getItems().stream().map(DataPersistence::getPredefinedWidget).forEach(dashboardSection::add);
             } else {
@@ -95,7 +95,7 @@ public class FlowSolutions extends HorizontalLayout {
             serializableDashboardWidget.setRowspan(widget.getRowspan());
             serializableDashboardWidget.setWidgetId(widget.getWidgetId());
             serializableDashboardWidget.setImportantData(widget.getImportantData());
-            serializableDashboardWidget.setWidgetType(widget.getWidgetType());
+            serializableDashboardWidget.setWidgetType(widget.getWidgetType() == null ? null: widget.getWidgetType().name());
             return serializableDashboardWidget;
         };
 
@@ -251,10 +251,10 @@ public class FlowSolutions extends HorizontalLayout {
 
         /*
          * Subtask 6.3: Make it so that the widgets in the dashboard are at least
-         *       400px in height and width.
+         *       200px in height and width.
          */
-        dashboard.setMaximumColumnWidth("400px");
-        dashboard.setMinimumColumnWidth("400px");
+        dashboard.setMaximumColumnWidth("200px");
+        dashboard.setMinimumColumnWidth("200px");
 
         // Subtask 6.4: Change the color of the remove button to red.
         // Add the following to the styles file:

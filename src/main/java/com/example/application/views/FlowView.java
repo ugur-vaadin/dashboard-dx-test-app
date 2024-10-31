@@ -73,7 +73,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * -1: Remove the gap between the widgets.
  * -2: Limit the maximum number of widgets in the same row to 2.
  * -3: Make it so that the widgets in the dashboard are at least
- *       400px in height and width.
+ *       200px in height and width.
  * -4: Change the color of the remove button to red.
  */
 @PageTitle("Flow View")

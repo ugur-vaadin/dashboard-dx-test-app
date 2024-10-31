@@ -1,22 +1,27 @@
 package com.example.application.services;
 
+import com.vaadin.hilla.Nullable;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class SerializableDashboardItem implements Serializable {
+    @Nullable
     private String title;
     // TODO maybe use itemid
+    @Nullable
     private String widgetId;
-    private WidgetType widgetType;
+    @Nullable
+    private String widgetType;
+    @Nullable
     private Integer rowspan;
+    @Nullable
     private Integer colspan;
+    @Nullable
     private String importantData;
     // TODO make sure not null for sections
+    @Nullable
     private List<SerializableDashboardItem> items;
-
-    public boolean isSection() {
-        return items != null;
-    }
 
     public String getTitle() {
         return title;
@@ -34,11 +39,11 @@ public class SerializableDashboardItem implements Serializable {
         this.items = items;
     }
 
-    public WidgetType getWidgetType() {
+    public String getWidgetType() {
         return widgetType;
     }
 
-    public void setWidgetType(WidgetType widgetType) {
+    public void setWidgetType(String widgetType) {
         this.widgetType = widgetType;
     }
 

@@ -1,5 +1,6 @@
 package com.example.application.services;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vaadin.hilla.Nullable;
 
 import java.io.Serializable;
@@ -77,5 +78,10 @@ public class SerializableDashboardItem implements Serializable {
 
     public void setWidgetId(String widgetId) {
         this.widgetId = widgetId;
+    }
+
+    @JsonIgnore
+    public boolean isSection() {
+        return items != null;
     }
 }

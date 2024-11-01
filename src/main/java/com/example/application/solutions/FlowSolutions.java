@@ -74,7 +74,7 @@ public class FlowSolutions extends HorizontalLayout {
          */
         List<SerializableDashboardItem> dataPersistenceItems = dataPersistence.getItems();
         dataPersistenceItems.forEach(item -> {
-            if (item.getItems() == null) {
+            if (item.isSection()) {
                 DashboardSection dashboardSection = dashboard.addSection(item.getTitle());
                 item.getItems().stream().map(DataPersistence::getPredefinedWidget).forEach(dashboardSection::add);
             } else {

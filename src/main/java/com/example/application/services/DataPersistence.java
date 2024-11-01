@@ -54,7 +54,7 @@ public class DataPersistence implements Serializable {
     }
 
     public static CustomWidget getPredefinedWidget(SerializableDashboardItem serializableDashboardItem) {
-        if (serializableDashboardItem.getItems() != null) {
+        if (serializableDashboardItem.isSection()) {
             return null;
         }
         CustomWidget dashboardWidget = new CustomWidget();

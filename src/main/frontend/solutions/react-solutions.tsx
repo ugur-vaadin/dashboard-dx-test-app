@@ -182,8 +182,6 @@ dashboard = () => {
   return (
     <Dashboard items={items} style={{
       '--vaadin-dashboard-row-min-height': '250px',
-      'height': '100%',
-      'width': '100%',
     }}>
       {renderer}
     </Dashboard>
@@ -196,8 +194,6 @@ dashboard = () => {
   return (
     <Dashboard items={items} editable style={{
       '--vaadin-dashboard-row-min-height': '250px',
-      'height': '100%',
-      'width': '100%',
     }}>
       {renderer}
     </Dashboard>
@@ -218,8 +214,6 @@ dashboard = () => {
       editable
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
       }}
       onDashboardItemResized={(e) => storeItems(e.detail.items)}
     >
@@ -267,8 +261,6 @@ dashboard = () => {
       editable
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
       }}
       onDashboardItemResized={(e) => storeItems(e.detail.items)}
       onDashboardItemMoved={(e) => storeItems(e.detail.items)}
@@ -298,8 +290,6 @@ dashboard = () => {
       denseLayout
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
       }}
       onDashboardItemResized={(e) => storeItems(e.detail.items)}
       onDashboardItemMoved={(e) => storeItems(e.detail.items)}
@@ -343,8 +333,6 @@ dashboard = () => {
       denseLayout
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
       }}
       onDashboardItemResized={(e) => storeItems(e.detail.items)}
       onDashboardItemMoved={(e) => storeItems(e.detail.items)}
@@ -370,8 +358,6 @@ dashboard = () => {
       denseLayout
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
         '--vaadin-dashboard-spacing': '0px'
       }}
       onDashboardItemResized={(e) => storeItems(e.detail.items)}
@@ -392,8 +378,6 @@ dashboard = () => {
       denseLayout
       style={{
         '--vaadin-dashboard-row-min-height': '250px',
-        'height': '100%',
-        'width': '100%',
         '--vaadin-dashboard-spacing': '0px',
         '--vaadin-dashboard-col-max-count': '2'
       }}
@@ -417,8 +401,6 @@ dashboard = () => {
       editable
       denseLayout
       style={{
-        'height': '100%',
-        'width': '100%',
         '--vaadin-dashboard-spacing': '0px',
         '--vaadin-dashboard-col-max-count': '2',
         '--vaadin-dashboard-col-min-width': '200px',
@@ -444,8 +426,6 @@ dashboard = () => {
         }
         
         vaadin-dashboard {
-          height: 100%;
-          width: 100%;
           --vaadin-dashboard-spacing: 0px;
           --vaadin-dashboard-col-max-count: 2;
           --vaadin-dashboard-col-min-width: 200px;

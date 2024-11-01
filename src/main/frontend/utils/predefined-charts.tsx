@@ -9,10 +9,6 @@ const BaseChart = (chartType: string) => {
   return () => (
     <Chart
       type={chartType}
-      style={{
-        minHeight: '200px',
-        minWidth: '200px',
-      }}
     >
       <ChartSeries title="2023" values={[150, 250, 300, 450, 600]} />
       <ChartSeries title="2024" values={[200, 300, 350, 500, 650]} />

@@ -9,7 +9,6 @@ import java.util.List;
 public class SerializableDashboardItem implements Serializable {
     @Nullable
     private String title;
-    // TODO maybe use itemid
     @Nullable
     private String widgetId;
     @Nullable
@@ -20,7 +19,6 @@ public class SerializableDashboardItem implements Serializable {
     private Integer colspan;
     @Nullable
     private String importantData;
-    // TODO make sure not null for sections
     @Nullable
     private List<SerializableDashboardItem> items;
 

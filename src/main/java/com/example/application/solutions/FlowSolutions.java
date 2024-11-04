@@ -176,7 +176,6 @@ public class FlowSolutions extends HorizontalLayout {
                     .filter(widgetsInSection -> !widgetsInSection.isEmpty())
                     .map(widgetsInSection -> widgetsInSection.get(0))
                     .findAny().get();
-            // TODO moving a widget (using API or UI) breaks the rendering of charts
             dashboard.addWidgetAtIndex(0, widgetToMove);
         });
         add(moveWidgetOutOfSection);
@@ -218,7 +217,6 @@ public class FlowSolutions extends HorizontalLayout {
             DashboardWidget widgetToRemove =  dashboard.getWidgets().get(0);
             dashboard.remove(widgetToRemove);
         });
-        // TODO removing a widget (using API or UI) makes the charts in all other widgets disappear
         add(removeFirstWidget);
 
         // Subtask 5.2: Remove a widget using the UI.

@@ -5,23 +5,23 @@ import {
 import '@vaadin/vaadin-lumo-styles/all-imports';
 import React from "react";
 
-const BaseChart = (chartType: string) => {
-  return () => (
-    <Chart
-      type={chartType}
-    >
-      <ChartSeries title="2023" values={[150, 250, 300, 450, 600]} />
-      <ChartSeries title="2024" values={[200, 300, 350, 500, 650]} />
-    </Chart>
-  );
-};
+interface BaseChartProps {
+  type: string;
+}
 
-export const AreaChart = BaseChart('area');
-export const AreaSplineChart = BaseChart('areaspline');
-export const BarChart = BaseChart('bar');
-export const ColumnChart = BaseChart('column');
-export const PieChart = BaseChart('pie');
-export const ScatterChart = BaseChart('scatter');
+const BaseChart: React.FC<BaseChartProps> = ({ type }) => (
+  <Chart type={type}>
+    <ChartSeries title="2023" values={[150, 250, 300, 450, 600]} />
+    <ChartSeries title="2024" values={[200, 300, 350, 500, 650]} />
+  </Chart>
+);
+
+export const AreaChart: React.FC = () => <BaseChart type="area" />;
+export const AreaSplineChart: React.FC = () => <BaseChart type="areaspline" />;
+export const BarChart: React.FC = () => <BaseChart type="bar" />;
+export const ColumnChart: React.FC = () => <BaseChart type="column" />;
+export const PieChart: React.FC = () => <BaseChart type="pie" />;
+export const ScatterChart: React.FC = () => <BaseChart type="scatter" />;
 
 export const getPredefinedChart = (type: string) => {
   switch (type) {
@@ -40,4 +40,4 @@ export const getPredefinedChart = (type: string) => {
     default:
       return null;
   }
-}
+};

@@ -92,15 +92,7 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  */
 function ReactView() {
 
-  type TestItem = DashboardItem & {
-    title?: string;
-    widgetId?: string;
-    importantData?: string;
-    widgetType?: string;
-    rowspan?: number;
-    colspan?: number;
-    items?: TestItem[];
-  };
+  type TestItem = Awaited<ReturnType<typeof DataPersistence.getItems>>[0];
 
   // TODO write your code here
   return (

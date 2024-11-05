@@ -11,15 +11,7 @@ import React, { useEffect, useState } from "react";
 import { getPredefinedChart } from "Frontend/utils/predefined-charts";
 import SerializableDashboardItem from "Frontend/generated/com/example/application/services/SerializableDashboardItem";
 
-type TestItem = DashboardItem & {
-  title?: string;
-  widgetId?: string;
-  importantData?: string;
-  widgetType?: string;
-  rowspan?: number;
-  colspan?: number;
-  items?: TestItem[];
-};
+type TestItem = Awaited<ReturnType<typeof DataPersistence.getItems>>[0];
 
 /*
  * *******************************************

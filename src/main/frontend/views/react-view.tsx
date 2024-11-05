@@ -43,13 +43,9 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  * TASK 2: Resizing Widgets
  * *******************************************
  *
- * -1: Add a button that makes the first widget consume 2 rows
- *      and 2 columns in the dashboard's layout.
- * -2: Resize a widget using a mouse. Dashboard should be
+ * -1: Resize a widget using a mouse. Dashboard should be
  *      configured for that purpose.
- * -3: Resize a widget using the keyboard.
- * -4: Preserve the current layout of the widgets within the
- *      dashboard whenever a widget is resized.
+ * -2: Resize a widget using the keyboard.
  *
  * *******************************************
  * TASK 3: Moving Items
@@ -71,17 +67,7 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  *      in the empty space with suitable widgets.
  *
  * *******************************************
- * TASK 5: Removing Items
- * *******************************************
- *
- * -1: Remove a widget programmatically.
- * -2: Remove a widget using the UI.
- * -3: Remove a section using the UI.
- * -4: Preserve the current layout of the widgets within the
- *      dashboard whenever an item is removed.
- *
- * *******************************************
- * TASK 6: Layout and Styling
+ * TASK 5: Layout and Styling
  * *******************************************
  *
  * -1: Remove the gap between the widgets.

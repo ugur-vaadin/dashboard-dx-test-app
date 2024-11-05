@@ -119,26 +119,13 @@ public class FlowSolutions extends HorizontalLayout {
          * *******************************************
          */
 
-        // Subtask 2.1: Make the first widget consume 2 rows and 3 columns
-        //      in the dashboard's layout.
-        widget1.setRowspan(2);
-        widgetInSection2.setColspan(3);
-
-        // Subtask 2.2: Resize a widget using a mouse. Dashboard should be
+        // Subtask 2.1: Resize a widget using a mouse. Dashboard should be
         //      configured for that purpose.
         dashboard.setEditable(true);
         // Resizing is done on the UI
 
-        // Subtask 2.3: Resize a widget using the keyboard.
+        // Subtask 2.2: Resize a widget using the keyboard.
         // Resizing is done on the UI
-
-        // Subtask 2.4: Preserve the current layout of the widgets within
-        //      the dashboard whenever a widget is resized.
-        dashboard.addItemResizedListener(e -> {
-            List<SerializableDashboardItem> serializableDashboardItems = e.getItems().stream()
-                    .map(itemToSerializableItem).toList();
-            dataPersistence.storeItems(serializableDashboardItems);
-        });
 
         /*
          * *******************************************
@@ -196,55 +183,24 @@ public class FlowSolutions extends HorizontalLayout {
 
         /*
          * *******************************************
-         * TASK 5: Removing Items
+         * TASK 5: Layout and Styling
          * *******************************************
          */
 
-        // Subtask 5.1: Remove the first widget using the Dashboard API on a
-        //      button click.
-        NativeButton removeFirstWidget = new NativeButton("Remove the first widget");
-        removeFirstWidget.addClickListener(click -> {
-            DashboardWidget widgetToRemove =  dashboard.getWidgets().get(0);
-            dashboard.remove(widgetToRemove);
-        });
-        add(removeFirstWidget);
-
-        // Subtask 5.2: Remove a widget using the UI.
-        // Removing is done on the UI
-
-        // Subtask 5.3: Remove a section using the UI.
-        // Removing is done on the UI
-
-        /*
-         * Subtask 5.4: Preserve the current layout of the widgets within the
-         *      dashboard whenever an item is removed.
-         */
-        dashboard.addItemRemovedListener(e -> {
-            List<SerializableDashboardItem> serializableDashboardItems = e.getItems().stream()
-                    .map(itemToSerializableItem).toList();
-            dataPersistence.storeItems(serializableDashboardItems);
-        });
-
-        /*
-         * *******************************************
-         * TASK 6: Layout and Styling
-         * *******************************************
-         */
-
-        // Subtask 6.1: Remove the gap between the widgets.
+        // Subtask 5.1: Remove the gap between the widgets.
         dashboard.setSpacing("0px");
 
-        // Subtask 6.2: Limit the maximum number of widgets in the same row to 2.
+        // Subtask 5.2: Limit the maximum number of widgets in the same row to 2.
         dashboard.setMaximumColumnCount(2);
 
         /*
-         * Subtask 6.3: Make it so that the widgets in the dashboard are at least
+         * Subtask 5.3: Make it so that the widgets in the dashboard are at least
          *       200px in height and width.
          */
         dashboard.setMaximumColumnWidth("200px");
         dashboard.setMinimumColumnWidth("200px");
 
-        // Subtask 6.4: Change the color of the remove button to red.
+        // Subtask 5.4: Change the color of the remove button to red.
         // Add the following to the styles file:
         /*
          * vaadin-dashboard-widget::part(remove-button) {

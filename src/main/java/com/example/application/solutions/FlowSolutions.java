@@ -86,31 +86,21 @@ public class FlowSolutions extends HorizontalLayout {
         /*
          * Subtask 1.5: Preserve the current layout of the widgets within the
          *      dashboard whenever the value of the text field in the widget is
-         *      updated. You can use the provided “DataPersistence.storeItems” method.
+         *      updated. You can use the provided “DataPersistence.storeItems” and
+         *      “DataPersistence.widgetToSerializableItem” methods.
          */
-        Function<CustomWidget, SerializableDashboardItem> widgetToSerializableItem = widget -> {
-            SerializableDashboardItem serializableDashboardWidget = new SerializableDashboardItem();
-            serializableDashboardWidget.setTitle(widget.getTitle());
-            serializableDashboardWidget.setColspan(widget.getColspan());
-            serializableDashboardWidget.setRowspan(widget.getRowspan());
-            serializableDashboardWidget.setWidgetId(widget.getWidgetId());
-            serializableDashboardWidget.setImportantData(widget.getImportantData());
-            serializableDashboardWidget.setWidgetType(widget.getWidgetType() == null ? null: widget.getWidgetType().name());
-            return serializableDashboardWidget;
-        };
-
         Function<Component, SerializableDashboardItem> itemToSerializableItem = item -> {
             SerializableDashboardItem serializableDashboardItem;
             if (item instanceof DashboardSection dashboardSection) {
                 List<SerializableDashboardItem> serializableWidgets = dashboardSection.getWidgets().stream()
                         .map(CustomWidget.class::cast)
-                        .map(widgetToSerializableItem)
+                        .map(DataPersistence::widgetToSerializableItem)
                         .collect(Collectors.toCollection(ArrayList::new));
                 serializableDashboardItem =  new SerializableDashboardItem();
                 serializableDashboardItem.setTitle(dashboardSection.getTitle());
                 serializableDashboardItem.setItems(serializableWidgets);
             } else {
-                serializableDashboardItem = widgetToSerializableItem.apply((CustomWidget) item);
+                serializableDashboardItem = DataPersistence.widgetToSerializableItem((CustomWidget) item);
             }
             return serializableDashboardItem;
         };

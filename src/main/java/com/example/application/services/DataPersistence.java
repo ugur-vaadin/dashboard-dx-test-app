@@ -75,6 +75,17 @@ public class DataPersistence implements Serializable {
         return dashboardWidget;
     }
 
+    public static SerializableDashboardItem widgetToSerializableItem(CustomWidget widget) {
+        SerializableDashboardItem serializableDashboardWidget = new SerializableDashboardItem();
+        serializableDashboardWidget.setTitle(widget.getTitle());
+        serializableDashboardWidget.setColspan(widget.getColspan());
+        serializableDashboardWidget.setRowspan(widget.getRowspan());
+        serializableDashboardWidget.setWidgetId(widget.getWidgetId());
+        serializableDashboardWidget.setImportantData(widget.getImportantData());
+        serializableDashboardWidget.setWidgetType(widget.getWidgetType() == null ? null: widget.getWidgetType().name());
+        return serializableDashboardWidget;
+    };
+
     private void initItems() {
         items = new ArrayList<>();
 

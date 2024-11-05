@@ -23,7 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * -5: Preserve the current layout of the widgets within the
  *      dashboard whenever the value of the text field in the
  *      widget is updated. You can use the provided
- *      “DataPersistence.storeItems” method.
+ *      “DataPersistence.storeItems” and
+ *      “DataPersistence.widgetToSerializableItem” methods.
  *
  * *******************************************
  * TASK 2: Resizing Widgets

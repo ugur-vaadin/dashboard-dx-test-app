@@ -23,9 +23,9 @@ export const config: ViewConfig = { menu: { order: 0, icon: 'line-awesome/svg/gl
  * TASK 1: Basic Setup and Initialization
  * *******************************************
  *
- * -1: Add a dashboard with two widgets and a section with two
- *      widgets to the sample application. The widgets and the
- *      section should have titles.
+ * -1: Add a dashboard with two widgets and two grouped widgets
+ *      to the sample application. The widgets and the section
+ *      should have titles.
  * -2: Set title and content to the components. You can use the
  *      provided charts in “PredefinedCharts” or any other
  *      custom components to create widgets.

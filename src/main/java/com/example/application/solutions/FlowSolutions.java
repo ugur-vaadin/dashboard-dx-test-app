@@ -31,8 +31,8 @@ public class FlowSolutions extends HorizontalLayout {
          * *******************************************
          */
 
-        // Subtask 1.1: Add a dashboard with two widgets and a section
-        //      with two widgets to the sample application.
+        // Subtask 1.1: Add a dashboard with two widgets and two grouped
+        //      widgets to the sample application.
         Dashboard dashboard = new Dashboard();
         dashboard.setSizeFull();
         add(dashboard);

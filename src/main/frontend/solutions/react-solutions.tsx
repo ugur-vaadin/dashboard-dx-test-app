@@ -19,9 +19,9 @@ type TestItem = Awaited<ReturnType<typeof DataPersistence.getItems>>[0];
  * *******************************************
  */
 
-// Subtask 1.1: Add a dashboard with two widgets and a section
-//      with two widgets to the sample application. The widgets
-//      and the section should have titles.
+// Subtask 1.1: Add a dashboard with two widgets and two grouped
+//      widgets to the sample application. The widgets and the
+//      section should have titles.
 let items: DashboardProps<TestItem>['items'] =
   [
     { title: 'Widget 1' },

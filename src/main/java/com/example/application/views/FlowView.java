@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * TASK 1: Basic Setup and Initialization
  * *******************************************
  *
- * -1: Add a dashboard with two widgets and a section with
- *      two widgets to the sample application.
+ * -1: Add a dashboard with two widgets and two grouped widgets
+ *      to the sample application.
  * -2: Set title and content to the components. You can use
  *      the provided charts in “PredefinedCharts” or any other
  *      custom components to create widgets.

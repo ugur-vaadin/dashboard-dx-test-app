@@ -19,12 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  *      custom components to create widgets.
  * -3: Place a span with text next to the title of a widget.
  * -4: Use the data from the method "DataPersistence.getItems"
- *      to populate the dashboard.
+ *      to populate the dashboard. You can use
+ *      "WidgetUtils.getPredefinedWidget" to convert the persisted
+ *      item to a widget.
  * -5: Preserve the current layout of the widgets within the
  *      dashboard whenever the value of the text field in the
  *      widget is updated. You can use the provided
  *      “DataPersistence.storeItems” and
- *      “DataPersistence.widgetToSerializableItem” methods.
+ *      “WidgetUtils.widgetToSerializableItem” methods.
  *
  * *******************************************
  * TASK 2: Resizing Widgets

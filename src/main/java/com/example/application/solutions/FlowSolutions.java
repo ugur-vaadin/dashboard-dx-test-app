@@ -4,6 +4,7 @@ import com.example.application.services.PredefinedCharts;
 import com.example.application.services.CustomWidget;
 import com.example.application.services.DataPersistence;
 import com.example.application.services.SerializableDashboardItem;
+import com.example.application.services.WidgetUtils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dashboard.Dashboard;
@@ -70,15 +71,16 @@ public class FlowSolutions extends HorizontalLayout {
 
         /*
          * Subtask 1.4: Use the data from the method "DataPersistence.getItems"
-         *      to populate the dashboard.
+         *      to populate the dashboard. You can use "WidgetUtils.getPredefinedWidget"
+         *      to convert the persisted item to a widget.
          */
         List<SerializableDashboardItem> dataPersistenceItems = dataPersistence.getItems();
         dataPersistenceItems.forEach(item -> {
             if (item.isSection()) {
                 DashboardSection dashboardSection = dashboard.addSection(item.getTitle());
-                item.getItems().stream().map(DataPersistence::getPredefinedWidget).forEach(dashboardSection::add);
+                item.getItems().stream().map(WidgetUtils::getPredefinedWidget).forEach(dashboardSection::add);
             } else {
-                CustomWidget dashboardWidget = DataPersistence.getPredefinedWidget(item);
+                CustomWidget dashboardWidget = WidgetUtils.getPredefinedWidget(item);
                 dashboard.add(dashboardWidget);
             }
         });
@@ -87,20 +89,20 @@ public class FlowSolutions extends HorizontalLayout {
          * Subtask 1.5: Preserve the current layout of the widgets within the
          *      dashboard whenever the value of the text field in the widget is
          *      updated. You can use the provided “DataPersistence.storeItems” and
-         *      “DataPersistence.widgetToSerializableItem” methods.
+         *      “WidgetUtils.widgetToSerializableItem” methods.
          */
         Function<Component, SerializableDashboardItem> itemToSerializableItem = item -> {
             SerializableDashboardItem serializableDashboardItem;
             if (item instanceof DashboardSection dashboardSection) {
                 List<SerializableDashboardItem> serializableWidgets = dashboardSection.getWidgets().stream()
                         .map(CustomWidget.class::cast)
-                        .map(DataPersistence::widgetToSerializableItem)
+                        .map(WidgetUtils::widgetToSerializableItem)
                         .collect(Collectors.toCollection(ArrayList::new));
                 serializableDashboardItem =  new SerializableDashboardItem();
                 serializableDashboardItem.setTitle(dashboardSection.getTitle());
                 serializableDashboardItem.setItems(serializableWidgets);
             } else {
-                serializableDashboardItem = DataPersistence.widgetToSerializableItem((CustomWidget) item);
+                serializableDashboardItem = WidgetUtils.widgetToSerializableItem((CustomWidget) item);
             }
             return serializableDashboardItem;
         };
